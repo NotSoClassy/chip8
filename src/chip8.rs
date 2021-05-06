@@ -209,7 +209,6 @@ impl Chip8 {
       0xE => {
         match nn {
           0x9E => {
-            println!("{} {}", x, self.v[x as usize]);
             if self.key[self.v[x as usize] as usize] == 1 {
               self.pc += 2;
             }
