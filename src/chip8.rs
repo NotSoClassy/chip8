@@ -38,7 +38,7 @@ pub struct Chip8 {
   pub rng: rand::rngs::ThreadRng,
   pub gfx: [[u8; CHIP8_WIDTH]; CHIP8_HEIGHT],
   pub pc: u16,
-  pub sp: u16,
+  pub sp: usize,
   pub v: [u8; REG_SIZE]
 }
 
@@ -100,7 +100,7 @@ impl Chip8 {
           },
           0xE => {
             self.sp -= 1;
-            self.pc = self.stack[self.sp as usize] + 2;
+            self.pc = self.stack[self.sp] + 2;
           }
           _ => { panic!("Unknown opcode {:#x}", instr); }
         }
@@ -109,7 +109,7 @@ impl Chip8 {
         self.pc = nnn;
       },
       0x2 => {
-        self.stack[self.sp as usize] = self.pc;
+        self.stack[self.sp] = self.pc;
         self.sp += 1;
         self.pc = nnn;
       },
